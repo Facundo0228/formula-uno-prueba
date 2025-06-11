@@ -1,309 +1,346 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Fórmula Uno</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Formula Uno</title>
+<style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      color: #333;
-      margin: 0;
-      padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f4f9;
+        color: #222;
+        margin: 0; padding: 0;
     }
     header {
-      background-color: #d40000;
-      color: white;
-      padding: 2rem;
-      text-align: center;
+        background: #ff4500;
+        padding: 15px 10px;
+        text-align: center;
+        font-size: 2.4em;
+        font-weight: bold;
+        color: white;
+        text-transform: uppercase;
     }
     main {
-      max-width: 960px;
-      margin: auto;
-      padding: 1rem;
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 0 20px;
     }
-    section {
-      background: white;
-      margin-bottom: 1.5rem;
-      padding: 1rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    section.team {
+        margin-bottom: 40px;
+        border-bottom: 2px solid #ff4500;
+        padding-bottom: 20px;
     }
-    h2 {
-      color: #d40000;
+    section.team h2 {
+        color: #ff7f50;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        font-size: 2em;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 5px;
+        margin-bottom: 10px;
     }
-    .equipo {
-      margin-bottom: 2rem;
+    section.team h2 img {
+        height: 40px;
+        border-radius: 6px;
     }
-    .equipo h3 {
-      margin-top: 0;
+    section.team p.description {
+        font-style: italic;
+        font-size: 1em;
+        margin: 0 0 15px 0;
+        max-width: 800px;
+        color: #555;
     }
-    .piloto {
-      margin: 1rem 0;
-      padding: 1rem;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      background: #f9f9f9;
+    .drivers {
+        display: flex;
+        gap: 25px;
+        flex-wrap: wrap;
     }
-    .bandera {
-      width: 24px;
-      height: 16px;
-      vertical-align: middle;
-      margin-right: 8px;
+    article.driver {
+        background: #fff;
+        border-radius: 10px;
+        padding: 15px;
+        width: 280px;
+        box-shadow: 0 0 8px #ff4500aa;
+        position: relative;
+        color: #222;
     }
-    input[type="text"] {
-      padding: 0.5rem;
-      margin-top: 1rem;
-      width: 100%;
-      font-size: 1rem;
+    .driver-name {
+        font-weight: 700;
+        font-size: 1.2em;
+        margin: 0 0 5px 0;
+        color: #ff4500;
     }
-    .chart-container {
-      position: relative;
-      height: 400px;
-      width: 100%;
-      margin-top: 2rem;
+    .driver-info {
+        font-size: 0.9em;
+        margin-bottom: 5px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
     }
-    .foto-auto {
-      max-width: 100%;
-      border-radius: 10px;
-      margin-top: 1rem;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    .driver-info img.flag {
+        width: 20px;
+        height: 14px;
+        border-radius: 2px;
+        border: 1px solid #ccc;
     }
-  </style>
+    .driver-img {
+        width: 100%;
+        border-radius: 10px;
+        margin-top: 10px;
+        object-fit: cover;
+        height: 160px;
+        border: 2px solid #ff4500;
+    }
+    .team-car {
+        margin-top: 12px;
+        width: 100%;
+        border-radius: 10px;
+        border: 2px solid #ff4500;
+        object-fit: contain;
+        max-height: 120px;
+    }
+    footer {
+        text-align: center;
+        padding: 15px 0;
+        font-size: 0.9em;
+        background: #eee;
+        color: #888;
+        margin-top: 40px;
+    }
+</style>
 </head>
 <body>
-  <header>
-    <h1>Fórmula Uno</h1>
-    <p>Descubre todo sobre los equipos y pilotos actuales de la F1</p>
-  </header>
-  <main>
-    <input type="text" id="buscador" placeholder="Busca un piloto (ej. Lewis Hamilton)..." oninput="buscarPiloto()" />
+<header>Formula Uno</header>
+<main>
 
-    <section>
-      <h2>Pilotos, Equipos y Autos 2025</h2>
-
-      <div class="equipo">
-        <h3>McLaren</h3>
-        <img
-          class="foto-auto"
-          src="https://upload.wikimedia.org/wikipedia/commons/e/e6/McLaren_MCL60_launch_2023_front.jpg"
-          alt="McLaren MCL60 2025"
-        />
-        <div class="piloto" data-nombre="lando norris">
-          <p><img src="https://flagcdn.com/gb.svg" class="bandera" alt="GB" /> <strong>Lando Norris</strong> – 24 años</p>
-          <p><strong>Desde:</strong> 2019</p>
+    <!-- McLaren -->
+    <section class="team" id="mclaren">
+        <h2>
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/f0/McLaren_Logo.svg/120px-McLaren_Logo.svg.png" alt="McLaren Logo" />
+            McLaren
+        </h2>
+        <p class="description">McLaren es un equipo británico con una rica historia en Fórmula 1. Actualmente se destaca como uno de los principales contendientes, con innovaciones y gran rendimiento en la pista.</p>
+        <img class="team-car" src="https://upload.wikimedia.org/wikipedia/commons/9/9c/McLaren_MCL60_2023_F1_car_1.jpg" alt="Auto McLaren MCL60 2023" />
+        <div class="drivers">
+            <article class="driver">
+                <div class="driver-name">Lando Norris</div>
+                <div class="driver-info"><img class="flag" src="https://flagcdn.com/w20/gb.png" alt="UK flag" /> <strong>Nacionalidad:</strong> Británico</div>
+                <div class="driver-info"><strong>Edad:</strong> 24 años</div>
+                <div class="driver-info"><strong>Equipo:</strong> McLaren</div>
+                <div class="driver-info"><strong>Desde:</strong> 2019</div>
+                <img class="driver-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Lando_Norris_2021_Monaco_GP_1.jpg/440px-Lando_Norris_2021_Monaco_GP_1.jpg" alt="Lando Norris" />
+            </article>
+            <article class="driver">
+                <div class="driver-name">Oscar Piastri</div>
+                <div class="driver-info"><img class="flag" src="https://flagcdn.com/w20/au.png" alt="Australia flag" /> <strong>Nacionalidad:</strong> Australiano</div>
+                <div class="driver-info"><strong>Edad:</strong> 22 años</div>
+                <div class="driver-info"><strong>Equipo:</strong> McLaren</div>
+                <div class="driver-info"><strong>Desde:</strong> 2023</div>
+                <img class="driver-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Oscar_Piastri_2023_Imola_GP_1.jpg/440px-Oscar_Piastri_2023_Imola_GP_1.jpg" alt="Oscar Piastri" />
+            </article>
         </div>
-        <div class="piloto" data-nombre="oscar piastri">
-          <p><img src="https://flagcdn.com/au.svg" class="bandera" alt="AU" /> <strong>Oscar Piastri</strong> – 23 años</p>
-          <p><strong>Desde:</strong> 2023</p>
-        </div>
-      </div>
-
-      <div class="equipo">
-        <h3>Red Bull</h3>
-        <img
-          class="foto-auto"
-          src="https://upload.wikimedia.org/wikipedia/commons/5/55/Red_Bull_RB19_-_2023_F1_Car.jpg"
-          alt="Red Bull RB19 2025"
-        />
-        <div class="piloto" data-nombre="max verstappen">
-          <p><img src="https://flagcdn.com/nl.svg" class="bandera" alt="NL" /> <strong>Max Verstappen</strong> – 27 años</p>
-          <p><strong>Desde:</strong> 2016</p>
-        </div>
-        <div class="piloto" data-nombre="sergio pérez">
-          <p><img src="https://flagcdn.com/mx.svg" class="bandera" alt="MX" /> <strong>Sergio Pérez</strong> – 34 años</p>
-          <p><strong>Desde:</strong> 2021</p>
-        </div>
-      </div>
-
-      <div class="equipo">
-        <h3>Ferrari</h3>
-        <img
-          class="foto-auto"
-          src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Ferrari_SF-23_-_2023_F1_Car.jpg"
-          alt="Ferrari SF-23 2025"
-        />
-        <div class="piloto" data-nombre="charles leclerc">
-          <p><img src="https://flagcdn.com/mc.svg" class="bandera" alt="MC" /> <strong>Charles Leclerc</strong> – 26 años</p>
-          <p><strong>Desde:</strong> 2018</p>
-        </div>
-        <div class="piloto" data-nombre="lewis hamilton">
-          <p><img src="https://flagcdn.com/gb.svg" class="bandera" alt="GB" /> <strong>Lewis Hamilton</strong> – 40 años</p>
-          <p><strong>Desde:</strong> 2025</p>
-        </div>
-      </div>
-
-      <div class="equipo">
-        <h3>Mercedes</h3>
-        <img
-          class="foto-auto"
-          src="https://upload.wikimedia.org/wikipedia/commons/f/f6/Mercedes_W14_2023_F1_Car.jpg"
-          alt="Mercedes W14 2025"
-        />
-        <div class="piloto" data-nombre="george russell">
-          <p><img src="https://flagcdn.com/gb.svg" class="bandera" alt="GB" /> <strong>George Russell</strong> – 26 años</p>
-          <p><strong>Desde:</strong> 2022</p>
-        </div>
-        <div class="piloto" data-nombre="andrea kimi antonelli">
-          <p><img src="https://flagcdn.com/it.svg" class="bandera" alt="IT" /> <strong>Andrea Kimi Antonelli</strong> – 18 años</p>
-          <p><strong>Desde:</strong> 2025</p>
-        </div>
-      </div>
-
-      <div class="equipo">
-        <h3>Aston Martin</h3>
-        <img
-          class="foto-auto"
-          src="https://upload.wikimedia.org/wikipedia/commons/6/6d/Aston_Martin_AMR23_2023_F1_Car.jpg"
-          alt="Aston Martin AMR23 2025"
-        />
-        <div class="piloto" data-nombre="fernando alonso">
-          <p><img src="https://flagcdn.com/es.svg" class="bandera" alt="ES" /> <strong>Fernando Alonso</strong> – 43 años</p>
-          <p><strong>Desde:</strong> 2023</p>
-        </div>
-        <div class="piloto" data-nombre="lance stroll">
-          <p><img src="https://flagcdn.com/ca.svg" class="bandera" alt="CA" /> <strong>Lance Stroll</strong> – 25 años</p>
-          <p><strong>Desde:</strong> 2021</p>
-        </div>
-      </div>
-
-      <div class="equipo">
-        <h3>Alpine</h3>
-        <img
-          class="foto-auto"
-          src="https://upload.wikimedia.org/wikipedia/commons/1/17/Alpine_A523_2023_F1_Car.jpg"
-          alt="Alpine A523 2025"
-        />
-        <div class="piloto" data-nombre="esteban ocon">
-          <p><img src="https://flagcdn.com/fr.svg" class="bandera" alt="FR" /> <strong>Esteban Ocon</strong> – 27 años</p>
-          <p><strong>Desde:</strong> 2020</p>
-        </div>
-        <div class="piloto" data-nombre="pierre gasly">
-          <p><img src="https://flagcdn.com/fr.svg" class="bandera" alt="FR" /> <strong>Pierre Gasly</strong> – 28 años</p>
-          <p><strong>Desde:</strong> 2023</p>
-        </div>
-      </div>
-
-      <div class="equipo">
-        <h3>Williams</h3>
-        <img
-          class="foto-auto"
-          src="https://upload.wikimedia.org/wikipedia/commons/8/85/Williams_FW45_2023_F1_Car.jpg"
-          alt="Williams FW45 2025"
-        />
-        <div class="piloto" data-nombre="alexander albon">
-          <p><img src="https://flagcdn.com/th.svg" class="bandera" alt="TH" /> <strong>Alexander Albon</strong> – 27 años</p>
-          <p><strong>Desde:</strong> 2022</p>
-        </div>
-        <div class="piloto" data-nombre="logan sargeant">
-          <p><img src="https://flagcdn.com/us.svg" class="bandera" alt="US" /> <strong>Logan Sargeant</strong> – 22 años</p>
-          <p><strong>Desde:</strong> 2023</p>
-        </div>
-      </div>
-
-      <div class="equipo">
-        <h3>Haas</h3>
-        <img
-          class="foto-auto"
-          src="https://upload.wikimedia.org/wikipedia/commons/9/90/Haas_VF-23_2023_F1_Car.jpg"
-          alt="Haas VF-23 2025"
-        />
-        <div class="piloto" data-nombre="kevin magnussen">
-          <p><img src="https://flagcdn.com/dk.svg" class="bandera" alt="DK" /> <strong>Kevin Magnussen</strong> – 31 años</p>
-          <p><strong>Desde:</strong> 2022</p>
-        </div>
-        <div class="piloto" data-nombre="nico hülkenberg">
-          <p><img src="https://flagcdn.com/de.svg" class="bandera" alt="DE" /> <strong>Nico Hülkenberg</strong> – 36 años</p>
-          <p><strong>Desde:</strong> 2023</p>
-        </div>
-      </div>
-
-      <div class="equipo">
-        <h3>Sauber (Alfa Romeo)</h3>
-        <img
-          class="foto-auto"
-          src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Alfa_Romeo_C43_2023_F1_Car.jpg"
-          alt="Alfa Romeo C43 2025"
-        />
-        <div class="piloto" data-nombre="valterri bottas">
-          <p><img src="https://flagcdn.com/fi.svg" class="bandera" alt="FI" /> <strong>Valtteri Bottas</strong> – 33 años</p>
-          <p><strong>Desde:</strong> 2022</p>
-        </div>
-        <div class="piloto" data-nombre="zhou guanyu">
-          <p><img src="https://flagcdn.com/cn.svg" class="bandera" alt="CN" /> <strong>Zhou Guanyu</strong> – 25 años</p>
-          <p><strong>Desde:</strong> 2022</p>
-        </div>
-      </div>
     </section>
 
-    <section>
-      <h2>Campeonato de Pilotos 2025</h2>
-      <div class="chart-container">
-        <canvas id="chartPilotos"></canvas>
-      </div>
+    <!-- Mercedes -->
+    <section class="team" id="mercedes">
+        <h2>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mercedes-Benz_Logo_2010.svg/120px-Mercedes-Benz_Logo_2010.svg.png" alt="Mercedes Logo" />
+            Mercedes
+        </h2>
+        <p class="description">Mercedes AMG Petronas es un equipo dominante de la era híbrida en Fórmula 1, reconocido por sus innovaciones técnicas y pilotos estrella.</p>
+        <img class="team-car" src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Mercedes_W14_2023_F1_car_1.jpg" alt="Auto Mercedes W14 2023" />
+        <div class="drivers">
+            <article class="driver">
+                <div class="driver-name">Lewis Hamilton</div>
+                <div class="driver-info"><img class="flag" src="https://flagcdn.com/w20/gb.png" alt="UK flag" /> <strong>Nacionalidad:</strong> Británico</div>
+                <div class="driver-info"><strong>Edad:</strong> 38 años</div>
+                <div class="driver-info"><strong>Equipo:</strong> Mercedes</div>
+                <div class="driver-info"><strong>Desde:</strong> 2013</div>
+                <img class="driver-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Lewis_Hamilton_2021_Austrian_GP_2.jpg/440px-Lewis_Hamilton_2021_Austrian_GP_2.jpg" alt="Lewis Hamilton" />
+            </article>
+            <article class="driver">
+                <div class="driver-name">George Russell</div>
+                <div class="driver-info"><img class="flag" src="https://flagcdn.com/w20/gb.png" alt="UK flag" /> <strong>Nacionalidad:</strong> Británico</div>
+                <div class="driver-info"><strong>Edad:</strong> 26 años</div>
+                <div class="driver-info"><strong>Equipo:</strong> Mercedes</div>
+                <div class="driver-info"><strong>Desde:</strong> 2022</div>
+                <img class="driver-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/George_Russell_2021_Austrian_GP_2.jpg/440px-George_Russell_2021_Austrian_GP_2.jpg" alt="George Russell" />
+            </article>
+        </div>
     </section>
 
-    <section>
-      <h2>Campeonato de Constructores 2025</h2>
-      <div class="chart-container">
-        <canvas id="chartEquipos"></canvas>
-      </div>
+    <!-- Red Bull -->
+    <section class="team" id="redbull">
+        <h2>
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/5/59/Red_Bull_Racing_Logo_2019.png/120px-Red_Bull_Racing_Logo_2019.png" alt="Red Bull Logo" />
+            Red Bull Racing
+        </h2>
+        <p class="description">Red Bull Racing es uno de los equipos más exitosos en la última década, con un estilo agresivo y pilotos talentosos que han marcado época.</p>
+        <img class="team-car" src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Red_Bull_RB19_2023_F1_car_1.jpg" alt="Auto Red Bull RB19 2023" />
+        <div class="drivers">
+            <article class="driver">
+                <div class="driver-name">Max Verstappen</div>
+                <div class="driver-info"><img class="flag" src="https://flagcdn.com/w20/nl.png" alt="Netherlands flag" /> <strong>Nacionalidad:</strong> Neerlandés</div>
+                <div class="driver-info"><strong>Edad:</strong> 26 años</div>
+                <div class="driver-info"><strong>Equipo:</strong> Red Bull Racing</div>
+                <div class="driver-info"><strong>Desde:</strong> 2016</div>
+                <img class="driver-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Max_Verstappen_2022_Austrian_GP_1.jpg/440px-Max_Verstappen_2022_Austrian_GP_1.jpg" alt="Max Verstappen" />
+            </article>
+            <article class="driver">
+                <div class="driver-name">Sergio Pérez</div>
+                <div class="driver-info"><img class="flag" src="https://flagcdn.com/w20/mx.png" alt="Mexico flag" /> <strong>Nacionalidad:</strong> Mexicano</div>
+                <div class="driver-info"><strong>Edad:</strong> 33 años</div>
+                <div class="driver-info"><strong>Equipo:</strong> Red Bull Racing</div>
+                <div class="driver-info"><strong>Desde:</strong> 2021</div>
+                <img class="driver-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Sergio_Pérez_2021_Belgian_GP_1.jpg/440px-Sergio_Pérez_2021_Belgian_GP_1.jpg" alt="Sergio Pérez" />
+            </article>
+        </div>
     </section>
-  </main>
 
-  <script>
-    function buscarPiloto() {
-      const filtro = document.getElementById("buscador").value.toLowerCase();
-      const pilotos = document.querySelectorAll(".piloto");
-      pilotos.forEach((piloto) => {
-        const nombre = piloto.getAttribute("data-nombre");
-        piloto.style.display = nombre.includes(filtro) ? "block" : "none";
-      });
-    }
+    <!-- Ferrari -->
+    <section class="team" id="ferrari">
+        <h2>
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d4/Scuderia_Ferrari_Logo.svg/120px-Scuderia_Ferrari_Logo.svg.png" alt="Ferrari Logo" />
+            Ferrari
+        </h2>
+        <p class="description">Ferrari es la escudería más legendaria y antigua de la Fórmula 1, con múltiples campeonatos y una pasión inigualable.</p>
+        <img class="team-car" src="https://upload.wikimedia.org/wikipedia/commons/7/70/Ferrari_SF-23_2023_F1_car_1.jpg" alt="Auto Ferrari SF-23 2023" />
+        <div class="drivers">
+            <article class="driver">
+                <div class="driver-name">Charles Leclerc</div>
+                <div class="driver-info"><img class="flag" src="https://flagcdn.com/w20/mc.png" alt="Monaco flag" /> <strong>Nacionalidad:</strong> Monegasco</div>
+                <div class="driver-info"><strong>Edad:</strong> 25 años</div>
+                <div class="driver-info"><strong>Equipo:</strong> Ferrari</div>
+                <div class="driver-info"><strong>Desde:</strong> 2019</div>
+                <img class="driver-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Charles_Leclerc_2022_British_GP_1.jpg/440px-Charles_Leclerc_2022_British_GP_1.jpg" alt="Charles Leclerc" />
+            </article>
+            <article class="driver">
+                <div class="driver-name">Carlos Sainz Jr.</div>
+                <div class="driver-info"><img class="flag" src="https://flagcdn.com/w20/es.png" alt="Spain flag" /> <strong>Nacionalidad:</strong> Español</div>
+                <div class="driver-info"><strong>Edad:</strong> 28 años</div>
+                <div class="driver-info"><strong>Equipo:</strong> Ferrari</div>
+                <div class="driver-info"><strong>Desde:</strong> 2021</div>
+                <img class="driver-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Carlos_Sainz_2022_British_GP_1.jpg/440px-Carlos_Sainz_2022_British_GP_1.jpg" alt="Carlos Sainz Jr." />
+            </article>
+        </div>
+    </section>
 
-    const ctxPilotos = document.getElementById("chartPilotos").getContext("2d");
-    new Chart(ctxPilotos, {
-      type: "bar",
-      data: {
-        labels: ["Lando Norris", "Oscar Piastri", "Max Verstappen", "Charles Leclerc", "Lewis Hamilton"],
-        datasets: [
-          {
-            label: "Puntos",
-            data: [150, 140, 125, 110, 95],
-            backgroundColor: "#d40000",
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: { beginAtZero: true },
-        },
-      },
-    });
+    <!-- Alpine -->
+    <section class="team" id="alpine">
+        <h2>
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Alpine_F1_Team_Logo.svg/120px-Alpine_F1_Team_Logo.svg.png" alt="Alpine Logo" />
+            Alpine
+        </h2>
+        <p class="description">Alpine F1 Team es el equipo francés con una ambición creciente y jóvenes talentos en su alineación.</p>
+        <img class="team-car" src="https://upload.wikimedia.org/wikipedia/commons/4/43/Alpine_A523_2023_F1_car_1.jpg" alt="Auto Alpine A523 2023" />
+        <div class="drivers">
+            <article class="driver">
+                <div class="driver-name">Esteban Ocon</div>
+                <div class="driver-info"><img class="flag" src="https://flagcdn.com/w20/fr.png" alt="France flag" /> <strong>Nacionalidad:</strong> Francés</div>
+                <div class="driver-info"><strong>Edad:</strong> 27 años</div>
+                <div class="driver-info"><strong>Equipo:</strong> Alpine</div>
+                <div class="driver-info"><strong>Desde:</strong> 2020</div>
+                <img class="driver-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Esteban_Ocon_2021_Belgian_GP_1.jpg/440px-Esteban_Ocon_2021_Belgian_GP_1.jpg" alt="Esteban Ocon" />
+            </article>
+            <article class="driver">
+                <div class="driver-name">Pierre Gasly</div>
+                <div class="driver-info"><img class="flag" src="https://flagcdn.com/w20/fr.png" alt="France flag" /> <strong>Nacionalidad:</strong> Francés</div>
+                <div class="driver-info"><strong>Edad:</strong> 27 años</div>
+                <div class="driver-info"><strong>Equipo:</strong> Alpine</div>
+                <div class="driver-info"><strong>Desde:</strong> 2023</div>
+                <img class="driver-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Pierre_Gasly_2022_Austrian_GP_1.jpg/440px-Pierre_Gasly_2022_Austrian_GP_1.jpg" alt="Pierre Gasly" />
+            </article>
+        </div>
+    </section>
 
-    const ctxEquipos = document.getElementById("chartEquipos").getContext("2d");
-    new Chart(ctxEquipos, {
-      type: "bar",
-      data: {
-        labels: ["McLaren", "Red Bull", "Ferrari", "Mercedes", "Aston Martin"],
-        datasets: [
-          {
-            label: "Puntos",
-            data: [290, 250, 205, 180, 120],
-            backgroundColor: "#3333aa",
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: { beginAtZero: true },
-        },
-      },
-    });
-  </script>
+    <!-- Alfa Romeo -->
+    <section class="team" id="alfaromeo">
+        <h2>
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/4d/Alfa_Romeo_in_Formula_One_logo_2023.svg/120px-Alfa_Romeo_in_Formula_One_logo_2023.svg.png" alt="Alfa Romeo Logo" />
+            Alfa Romeo
+        </h2>
+        <p class="description">Alfa Romeo compite con una mezcla de experiencia y juventud, buscando volver a los primeros planos de la Fórmula 1.</p>
+        <img class="team-car" src="https://upload.wikimedia.org/wikipedia/commons/9/90/Alfa_Romeo_C43_2023_F1_car_1.jpg" alt="Auto Alfa Romeo C43 2023" />
+        <div class="drivers">
+            <article class="driver">
+                <div class="driver-name">Valtteri Bottas</div>
+                <div class="driver-info"><img class="flag" src="https://flagcdn.com/w20/fi.png" alt="Finland flag" /> <strong>Nacionalidad:</strong> Finlandés</div>
+                <div class="driver-info"><strong>Edad:</strong> 33 años</div>
+                <div class="driver-info"><strong>Equipo:</strong> Alfa Romeo</div>
+                <div class="driver-info"><strong>Desde:</strong> 2022</div>
+                <img class="driver-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Valtteri_Bottas_2022_Austrian_GP_1.jpg/440px-Valtteri_Bottas_2022_Austrian_GP_1.jpg" alt="Valtteri Bottas" />
+            </article>
+            <article class="driver">
+                <div class="driver-name">Zhou Guanyu</div>
+                <div class="driver-info"><img class="flag" src="https://flagcdn.com/w20/cn.png" alt="China flag" /> <strong>Nacionalidad:</strong> Chino</div>
+                <div class="driver-info"><strong>Edad:</strong> 25 años</div>
+                <div class="driver-info"><strong>Equipo:</strong> Alfa Romeo</div>
+                <div class="driver-info"><strong>Desde:</strong> 2022</div>
+                <img class="driver-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Zhou_Guanyu_2022_Italian_GP_1.jpg/440px-Zhou_Guanyu_2022_Italian_GP_1.jpg" alt="Zhou Guanyu" />
+            </article>
+        </div>
+    </section>
+
+    <!-- Haas -->
+    <section class="team" id="haas">
+        <h2>
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/3/3f/Haas_F1_Team_Logo.svg/120px-Haas_F1_Team_Logo.svg.png" alt="Haas Logo" />
+            Haas F1 Team
+        </h2>
+        <p class="description">Haas es un equipo estadounidense en crecimiento, con pilotos jóvenes y una estrategia para escalar posiciones en la parrilla.</p>
+        <img class="team-car" src="https://upload.wikimedia.org/wikipedia/commons/0/06/Haas_VF-23_2023_F1_car_1.jpg" alt="Auto Haas VF-23 2023" />
+        <div class="drivers">
+            <article class="driver">
+                <div class="driver-name">Kevin Magnussen</div>
+                <div class="driver-info"><img class="flag" src="https://flagcdn.com/w20/dk.png" alt="Denmark flag" /> <strong>Nacionalidad:</strong> Danés</div>
+                <div class="driver-info"><strong>Edad:</strong> 31 años</div>
+                <div class="driver-info"><strong>Equipo:</strong> Haas</div>
+                <div class="driver-info"><strong>Desde:</strong> 2022</div>
+                <img class="driver-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Kevin_Magnussen_2022_Belgian_GP_1.jpg/440px-Kevin_Magnussen_2022_Belgian_GP_1.jpg" alt="Kevin Magnussen" />
+            </article>
+            <article class="driver">
+                <div class="driver-name">Nico Hülkenberg</div>
+                <div class="driver-info"><img class="flag" src="https://flagcdn.com/w20/de.png" alt="Germany flag" /> <strong>Nacionalidad:</strong> Alemán</div>
+                <div class="driver-info"><strong>Edad:</strong> 35 años</div>
+                <div class="driver-info"><strong>Equipo:</strong> Haas</div>
+                <div class="driver-info"><strong>Desde:</strong> 2023</div>
+                <img class="driver-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Nico_H%C3%BClkenberg_2022_Spanish_GP_1.jpg/440px-Nico_H%C3%BClkenberg_2022_Spanish_GP_1.jpg" alt="Nico Hülkenberg" />
+            </article>
+        </div>
+    </section>
+
+    <!-- AlphaTauri -->
+    <section class="team" id="alphatauri">
+        <h2>
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/4c/Scuderia_AlphaTauri_Logo_2020.svg/120px-Scuderia_AlphaTauri_Logo_2020.svg.png" alt="AlphaTauri Logo" />
+            AlphaTauri
+        </h2>
+        <p class="description">AlphaTauri es el equipo filial de Red Bull, con una mezcla de jóvenes promesas y pilotos experimentados.</p>
+        <img class="team-car" src="https://upload.wikimedia.org/wikipedia/commons/d/d6/AlphaTauri_AT04_2023_F1_car_1.jpg" alt="Auto AlphaTauri AT04 2023" />
+        <div class="drivers">
+            <article class="driver">
+                <div class="driver-name">Yuki Tsunoda</div>
+                <div class="driver-info"><img class="flag" src="https://flagcdn.com/w20/jp.png" alt="Japan flag" /> <strong>Nacionalidad:</strong> Japonés</div>
+                <div class="driver-info"><strong>Edad:</strong> 22 años</div>
+                <div class="driver-info"><strong>Equipo:</strong> AlphaTauri</div>
+                <div class="driver-info"><strong>Desde:</strong> 2021</div>
+                <img class="driver-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Yuki_Tsunoda_2021_Austrian_GP_1.jpg/440px-Yuki_Tsunoda_2021_Austrian_GP_1.jpg" alt="Yuki Tsunoda" />
+            </article>
+            <article class="driver">
+                <div class="driver-name">Nyck de Vries</div>
+                <div class="driver-info"><img class="flag" src="https://flagcdn.com/w20/nl.png" alt="Netherlands flag" /> <strong>Nacionalidad:</strong> Neerlandés</div>
+                <div class="driver-info"><strong>Edad:</strong> 28 años</div>
+                <div class="driver-info"><strong>Equipo:</strong> AlphaTauri</div>
+                <div class="driver-info"><strong>Desde:</strong> 2023</div>
+                <img class="driver-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Nyck_de_Vries_2023_Austrian_GP_1.jpg/440px-Nyck_de_Vries_2023_Austrian_GP_1.jpg" alt="Nyck de Vries" />
+            </article>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>© 2025 Facundo. Todos los derechos reservados.</p>
+</footer>
 </body>
 </html>
